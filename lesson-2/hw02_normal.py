@@ -1,4 +1,5 @@
 import datetime
+import math
 import random
 
 
@@ -8,6 +9,13 @@ import random
 # но только если результаты извлечения корня не имеют десятичной части и
 # если такой корень вообще можно извлечь
 # Пример: Дано: [2, -5, 8, 9, -25, 25, 4] Результат: [3, 5, 2]
+
+
+def square_roots_list(lst):
+    print(lst)
+    return list(
+        map(lambda elem: int(math.sqrt(elem)), filter(lambda elem: elem > 0 and math.sqrt(elem).is_integer(), lst)))
+
 
 # Задача-2: Дана дата в формате dd.mm.yyyy, например: 02.11.2013.
 # Ваша задача вывести дату в текстовом виде, например: второе ноября 2013 года.
@@ -90,17 +98,12 @@ def unique_list_a(lst):
 
 
 def unique_list_b(lst):
-    # counts = {}
-    # result = []
-    # for elem in lst:
-    #     dict[elem] = lst.count(elem)
-    # for keys in dict.fromkeys():
-    #     result.append()
-
     return list(filter(lambda elem: lst.count(elem) == 1, lst))
 
 
 if __name__ == '__main__':
+    lst = list(random.randrange(-100, 100) for _ in range(10))
+    print(square_roots_list(lst))
     print('--------------------------------------------------')
     date_to_print = datetime.datetime.now()
     print_date(date_to_print)
