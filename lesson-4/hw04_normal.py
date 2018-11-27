@@ -1,5 +1,6 @@
 import pprint
 import random
+from datetime import datetime as dt
 
 
 # Задание-1:
@@ -11,31 +12,34 @@ import random
 # import random
 
 
-# def getsubs(loc, s):
-#     substr = s[loc:]
-#     i = -1
-#     while(substr):
-#         yield substr
-#         substr = s[loc:i]
-#         i -= 1
-#
-#
-# def longest_sub(str):
-#     occ = defaultdict(int)
-#     for i in range(len(str)):
-#         for sub in getsubs(i, str):
-#             occ[sub] += 1
-#     return max(occ.keys(), key=(lambda key: occ[key]))
-#
-#
-# def find_in_file(sym_count):
-#     file_name = f'task1_normal_{dt.timestamp(dt.now())}'
-#     with open(file_name, 'w') as file:
-#         for _ in range(sym_count - 1):
-#             file.write(str(random.randint(0, 9)))
-#     with open(file_name, 'r') as file:
-#         data = file.read(sym_count)
-#     return longest_sub(data)
+def longest_seq(str):
+    dict = {}
+    prev = str[0]
+    seq = prev
+    length = len(seq)
+    for i in str[1:]:
+        if i == prev:
+            seq += i
+            length += 1
+        else:
+            if seq in dict:
+                dict[seq] = length if length > dict[seq] else dict[seq]
+            else:
+                dict[seq] = length
+            seq = i
+            length = 1
+        prev = i
+    return max(dict.keys(), key=(lambda key: dict[key]))
+
+
+def find_in_file(sym_count):
+    file_name = f'task1_normal_{dt.timestamp(dt.now())}'
+    with open(file_name, 'w') as file:
+        for _ in range(sym_count - 1):
+            file.write(str(random.randint(0, 3)))
+    with open(file_name, 'r') as file:
+        data = file.read(sym_count)
+    return longest_seq(data)
 
 
 # Задание-2
@@ -57,8 +61,8 @@ def random_matrix(length):
 
 
 if __name__ == '__main__':
-    # str = find_in_file(20)
-    # print(str)
+    str = find_in_file(20)
+    print(f'The longest sequence is: {str} having length {len(str)}')
     print('-----------------------------------------------')
     matrix = random_matrix(10)
     pprint.pprint(matrix)
